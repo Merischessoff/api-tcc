@@ -1,0 +1,5 @@
+INSERT INTO atividadedevidadiaria(descricao, nome)VALUES('Ensina como escovar os dentes','Escovar os dentes');
+
+INSERT INTO usuario(login, senha, tipo)VALUES('responsavel', '$2a$12$7IS5Hs4LWd9QOT1EcnGM4uEH4OspyCSrcx4cTRW.gqsSi.4kKtTTa', 'RESPONSAVEL');
+
+INSERT INTO usuario(login, senha, tipo)VALUES('leitor', '$2a$12$7IS5Hs4LWd9QOT1EcnGM4uEH4OspyCSrcx4cTRW.gqsSi.4kKtTTa', 'LEITOR');
