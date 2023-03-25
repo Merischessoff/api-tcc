@@ -24,7 +24,7 @@ public class TokenService {
             var algoritmo = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer("API tcc.histsoc")
-                    .withSubject(usuario.getEmail() )
+                    .withSubject(usuario.getEmail())
                     //.withExpiresAt(dataExpiracao())
                     .sign(algoritmo);
         } catch (JWTCreationException exception){

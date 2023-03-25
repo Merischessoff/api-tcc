@@ -58,4 +58,10 @@ public class UsuarioController {
         return ResponseEntity.ok(new DadosDetalhamentoUsuario(usuario));
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<DadosTipoUsuario> pesquisaUsuarioPorEmail(@PathVariable String email) {
+        var usuario = repository.findByEmailTipoUsuario(email);
+        return ResponseEntity.ok(new DadosTipoUsuario(usuario));
+    }
+
 }
