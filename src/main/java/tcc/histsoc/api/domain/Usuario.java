@@ -27,7 +27,11 @@ public class Usuario implements UserDetails {
     private String cpf;
     private String email;
     private String senha;
+
+    private String emailUsuarioVinculado;
     
+    
+
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipo;
     
@@ -37,6 +41,7 @@ public class Usuario implements UserDetails {
         this.cpf = dados.cpf();
         this.senha = dados.senha();
         this.tipo = dados.tipo();
+        this.emailUsuarioVinculado = dados.emailUsuarioVinculado();
     }
 
     public void atualizarInformacoes(DadosAtualizacaoUsuario dados){
@@ -91,5 +96,13 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void setEmailUsuarioVinculado(String emailUsuarioVinculado) {
+        this.emailUsuarioVinculado = emailUsuarioVinculado;
+    }
+
+    public String getEmailUsuarioVinculado() {
+        return this.emailUsuarioVinculado;
     }
 }

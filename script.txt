@@ -1,1 +1,228 @@
-insert into usuario(cpf, email, nome, senha, tipo) values('02564538029', 'gonkaschessoff@gmail.com', 'meridiane', '$2a$12$M53WS65sy5KW4sx9M4ui9Ovs7XXHkOEw2bIZMsGg1jEALb24wKDNi', 'RESPONSAVEL');
+    alter table atividadedevidadiaria_historias_sociais 
+       drop 
+       foreign key FKaeqxj0c7vi5234pdql808s22i
+Hibernate: 
+    
+    alter table atividadedevidadiaria_historias_sociais 
+       drop 
+       foreign key FK45rpa29xxjvfv5nrr3pvjmhor
+Hibernate: 
+    
+    alter table habilidadesocial_historias_sociais 
+       drop 
+       foreign key FKn1yeksxh6vseslglanbgseg60
+Hibernate: 
+    
+    alter table habilidadesocial_historias_sociais 
+       drop 
+       foreign key FK4b9jmp40b0me5wdmobsp9dhhg
+Hibernate: 
+    
+    alter table historiasocial_atividade_de_vida_diarias 
+       drop 
+       foreign key FKbnhedycnu12x396xbg3q4rx61
+Hibernate: 
+    
+    alter table historiasocial_atividade_de_vida_diarias 
+       drop 
+       foreign key FKgxw4ji2swib4vdwfi2fi0igi6
+Hibernate: 
+    
+    alter table historiasocial_habilidades_sociais 
+       drop 
+       foreign key FKnppt08h3q1wynnstdmcqyk6nm
+Hibernate: 
+    
+    alter table historiasocial_habilidades_sociais 
+       drop 
+       foreign key FK18p729khgrw7w5mbb0gvqjuk4
+Hibernate: 
+    
+    alter table historiasocial_imagens 
+       drop 
+       foreign key FKmnybo3yat0s5dvlduxx260jpc
+Hibernate: 
+    
+    alter table historiasocial_imagens 
+       drop 
+       foreign key FKn94ffq4fcm5x5qwfr3ysp834w
+Hibernate: 
+    
+    alter table imagem 
+       drop 
+       foreign key FKc9xmckv5db0wv02u2v9xc7j8l
+Hibernate: 
+    
+    drop table if exists atividadedevidadiaria
+Hibernate: 
+    
+    drop table if exists atividadedevidadiaria_historias_sociais
+Hibernate: 
+    
+    drop table if exists habilidadesocial
+Hibernate: 
+    
+    drop table if exists habilidadesocial_historias_sociais
+Hibernate: 
+    
+    drop table if exists historiasocial
+Hibernate: 
+    
+    drop table if exists historiasocial_atividade_de_vida_diarias
+Hibernate: 
+    
+    drop table if exists historiasocial_habilidades_sociais
+Hibernate: 
+    
+    drop table if exists historiasocial_imagens
+Hibernate: 
+    
+    drop table if exists imagem
+Hibernate: 
+    
+    drop table if exists usuario
+Hibernate: 
+    
+    create table atividadedevidadiaria (
+       id bigint not null auto_increment,
+        descricao varchar(255),
+        nome varchar(255),
+        primary key (id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table atividadedevidadiaria_historias_sociais (
+       atividade_de_vida_diaria_id bigint not null,
+        historias_sociais_id bigint not null
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table habilidadesocial (
+       id bigint not null auto_increment,
+        descricao varchar(255),
+        nome varchar(255),
+        primary key (id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table habilidadesocial_historias_sociais (
+       habilidade_social_id bigint not null,
+        historias_sociais_id bigint not null
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table historiasocial (
+       id bigint not null auto_increment,
+        texto varchar(255),
+        titulo varchar(255),
+        primary key (id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table historiasocial_atividade_de_vida_diarias (
+       historia_social_id bigint not null,
+        atividade_de_vida_diarias_id bigint not null
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table historiasocial_habilidades_sociais (
+       historia_social_id bigint not null,
+        habilidades_sociais_id bigint not null
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table historiasocial_imagens (
+       historia_social_id bigint not null,
+        imagens_id bigint not null
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table imagem (
+       id bigint not null auto_increment,
+        seq varchar(255),
+        url varchar(255),
+        historia_social_id bigint,
+        primary key (id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table usuario (
+       id bigint not null auto_increment,
+        cpf varchar(255),
+        cpf_usuario_vinculado varchar(255),
+        email varchar(255),
+        nome varchar(255),
+        senha varchar(255),
+        tipo varchar(255),
+        primary key (id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    alter table historiasocial_imagens 
+       add constraint UK_nx9wrap8vc3xbaj7uhv974gg0 unique (imagens_id)
+Hibernate: 
+    
+    alter table atividadedevidadiaria_historias_sociais 
+       add constraint FKaeqxj0c7vi5234pdql808s22i 
+       foreign key (historias_sociais_id) 
+       references historiasocial (id)
+Hibernate: 
+    
+    alter table atividadedevidadiaria_historias_sociais 
+       add constraint FK45rpa29xxjvfv5nrr3pvjmhor 
+       foreign key (atividade_de_vida_diaria_id) 
+       references atividadedevidadiaria (id)
+Hibernate: 
+    
+    alter table habilidadesocial_historias_sociais 
+       add constraint FKn1yeksxh6vseslglanbgseg60 
+       foreign key (historias_sociais_id) 
+       references historiasocial (id)
+Hibernate: 
+    
+    alter table habilidadesocial_historias_sociais 
+       add constraint FK4b9jmp40b0me5wdmobsp9dhhg 
+       foreign key (habilidade_social_id) 
+       references habilidadesocial (id)
+Hibernate: 
+    
+    alter table historiasocial_atividade_de_vida_diarias 
+       add constraint FKbnhedycnu12x396xbg3q4rx61 
+       foreign key (atividade_de_vida_diarias_id) 
+       references atividadedevidadiaria (id)
+Hibernate: 
+    
+    alter table historiasocial_atividade_de_vida_diarias 
+       add constraint FKgxw4ji2swib4vdwfi2fi0igi6 
+       foreign key (historia_social_id) 
+       references historiasocial (id)
+Hibernate: 
+    
+    alter table historiasocial_habilidades_sociais 
+       add constraint FKnppt08h3q1wynnstdmcqyk6nm 
+       foreign key (habilidades_sociais_id) 
+       references habilidadesocial (id)
+Hibernate: 
+    
+    alter table historiasocial_habilidades_sociais 
+       add constraint FK18p729khgrw7w5mbb0gvqjuk4 
+       foreign key (historia_social_id) 
+       references historiasocial (id)
+Hibernate: 
+    
+    alter table historiasocial_imagens 
+       add constraint FKmnybo3yat0s5dvlduxx260jpc 
+       foreign key (imagens_id) 
+       references imagem (id)
+Hibernate: 
+    
+    alter table historiasocial_imagens 
+       add constraint FKn94ffq4fcm5x5qwfr3ysp834w 
+       foreign key (historia_social_id) 
+       references historiasocial (id)
+Hibernate: 
+    
+    alter table imagem 
+       add constraint FKc9xmckv5db0wv02u2v9xc7j8l 
+       foreign key (historia_social_id) 
+       references historiasocial (id)
