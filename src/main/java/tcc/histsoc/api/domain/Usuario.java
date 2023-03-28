@@ -49,7 +49,6 @@ public class Usuario implements UserDetails {
             this.nome = dados.nome();
             this.email = dados.email();
             this.senha = dados.senha();
-            this.tipo = dados.tipo();
         }
     }
 
