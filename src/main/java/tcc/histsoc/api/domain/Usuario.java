@@ -45,11 +45,9 @@ public class Usuario implements UserDetails {
     }
 
     public void atualizarInformacoes(DadosAtualizacaoUsuario dados){
-        if(dados.id()!=null){
-            this.nome = dados.nome();
-            this.email = dados.email();
-            this.senha = dados.senha();
-        }
+        this.nome = dados.nome();
+        this.email = dados.email();
+        this.senha = dados.senha();
     }
 
     private static final String ROLE_USER_LEITOR = "LEITOR";

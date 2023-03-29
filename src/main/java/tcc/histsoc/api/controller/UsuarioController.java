@@ -38,11 +38,12 @@ public class UsuarioController {
         return ResponseEntity.ok(lista);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizacaoUsuario dados) {
-        var usuario = repository.getReferenceById(dados.id());
+    public ResponseEntity atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoUsuario dados) {
+        var usuario = repository.getReferenceById(id);
         usuario.atualizarInformacoes(dados);
+        repository.save(usuario);
         return ResponseEntity.ok(new DadosDetalhamentoUsuario(usuario));
     }
 
