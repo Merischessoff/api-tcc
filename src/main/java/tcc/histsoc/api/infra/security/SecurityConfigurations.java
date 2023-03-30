@@ -33,7 +33,7 @@ public class SecurityConfigurations {
                                 .and()
                                     .authorizeRequests()
                                     .antMatchers(HttpMethod.POST, "/login").permitAll()
-                                    .antMatchers(HttpMethod.POST, "/usuario").permitAll()
+                                    .antMatchers(HttpMethod.POST, "/usuario/cadastro").permitAll()
                                     //.antMatchers("/atividadedevidadiaria").hasRole("RESPONSAVEL")
                                     .anyRequest().authenticated()
                 .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

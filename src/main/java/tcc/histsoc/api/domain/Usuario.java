@@ -46,7 +46,6 @@ public class Usuario implements UserDetails {
 
     public void atualizarInformacoes(DadosAtualizacaoUsuario dados){
         this.nome = dados.nome();
-        this.email = dados.email();
         this.senha = dados.senha();
     }
 

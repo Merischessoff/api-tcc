@@ -20,7 +20,7 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository repository;
 
-    @PostMapping
+    @PostMapping("/cadastro")
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosCadUsuario dados, UriComponentsBuilder uriBuilder) {
         var usuario = new Usuario(dados);
@@ -29,7 +29,14 @@ public class UsuarioController {
         return ResponseEntity.created(uri).body(usuario);
     }
 
-    @GetMapping("/usuariosleitores/{email}")
+
+    @GetMapping("/pesquisa/{email}")
+    public ResponseEntity<DadosTipoUsuario> pesquisaUsuarioPorEmail(@PathVariable String email) {
+        var usuario = repository.findByEmailUsuario(email);
+        return ResponseEntity.ok(new DadosTipoUsuario(usuario));
+    }
+    
+    @GetMapping("/pesquisa/leitorvinculado/{email}")
     public ResponseEntity<List<DadosListagemUsuario>> listarUsuariosLeitoresPorEmail(@PathVariable String email) {
         List<Usuario> usuarios = repository.findByAllEmailUsuariosLeitores(email);
         List<DadosListagemUsuario> lista = usuarios.stream()
@@ -38,10 +45,10 @@ public class UsuarioController {
         return ResponseEntity.ok(lista);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/edita/leitor/{email}")
     @Transactional
-    public ResponseEntity atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoUsuario dados) {
-        var usuario = repository.getReferenceById(id);
+    public ResponseEntity atualizar(@PathVariable String email, @RequestBody @Valid DadosAtualizacaoUsuario dados) {
+        var usuario = repository.findByEmailUsuario(email);
         usuario.atualizarInformacoes(dados);
         repository.save(usuario);
         return ResponseEntity.ok(new DadosDetalhamentoUsuario(usuario));
@@ -61,10 +68,5 @@ public class UsuarioController {
         return ResponseEntity.ok(new DadosDetalhamentoUsuario(usuario));
     }
 
-    @GetMapping("/email/{email}")
-    public ResponseEntity<DadosTipoUsuario> pesquisaUsuarioPorEmail(@PathVariable String email) {
-        var usuario = repository.findByEmailTipoUsuario(email);
-        return ResponseEntity.ok(new DadosTipoUsuario(usuario));
-    }
 
 }
