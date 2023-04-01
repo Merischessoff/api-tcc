@@ -22,7 +22,7 @@ public class UsuarioController {
 
     @PostMapping("/cadastro")
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadUsuario dados, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<Usuario> cadastrar(@RequestBody @Valid DadosCadUsuario dados, UriComponentsBuilder uriBuilder) {
         var usuario = new Usuario(dados);
         repository.save(usuario);
         var uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
@@ -47,23 +47,23 @@ public class UsuarioController {
 
     @PutMapping("/edita/leitor/{email}")
     @Transactional
-    public ResponseEntity atualizar(@PathVariable String email, @RequestBody @Valid DadosAtualizacaoUsuario dados) {
+    public ResponseEntity<DadosDetalhamentoUsuario> atualizar(@PathVariable String email, @RequestBody @Valid DadosAtualizacaoUsuario dados) {
         var usuario = repository.findByEmailUsuario(email);
         usuario.atualizarInformacoes(dados);
         repository.save(usuario);
         return ResponseEntity.ok(new DadosDetalhamentoUsuario(usuario));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/exclui/{email}")
     @Transactional
-    public ResponseEntity excluir(@PathVariable Long id) {
-        var usuario = repository.getReferenceById(id);
+    public ResponseEntity<Usuario> excluir(@PathVariable String email) {
+        var usuario = repository.findByEmailUsuario(email);
         repository.delete(usuario);;
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity detalhar(@PathVariable Long id) {
+    public ResponseEntity<DadosDetalhamentoUsuario> detalhar(@PathVariable Long id) {
         var usuario = repository.getReferenceById(id);
         return ResponseEntity.ok(new DadosDetalhamentoUsuario(usuario));
     }
