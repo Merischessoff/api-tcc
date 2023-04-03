@@ -9,5 +9,8 @@ import tcc.histsoc.api.domain.Imagem;
 
 public record DadosCadHisSoc (
     @NotBlank String titulo,
-    @NotBlank String texto, List<HabilidadeSocial> habilidadesSociais, List<AtividadeDeVidaDiaria> atividadeDeVidaDiarias, List<Imagem> imagens){}
+    @NotBlank String texto, 
+    List<HabilidadeSocial> habilidadesSociais, 
+    List<AtividadeDeVidaDiaria> atividadeDeVidaDiarias, 
+    List<Imagem> imagens){}
 

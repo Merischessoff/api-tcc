@@ -7,6 +7,6 @@ import tcc.histsoc.api.domain.HistoriaSocial;
 
 public record DadosCadAVD(
         @NotBlank String nome, 
-        @NotBlank String descricao, List<HistoriaSocial> historiasSociais){
+        @NotBlank String descricao, HistoriaSocial historiaSocial){
 
 }

@@ -5,8 +5,8 @@ import java.util.List;
 import tcc.histsoc.api.domain.HabilidadeSocial;
 import tcc.histsoc.api.domain.HistoriaSocial;
 
-public record DadosDetalhamentoHabSoc(Long id, String nome, String descricao, List<HistoriaSocial> historiasSociais){
+public record DadosDetalhamentoHabSoc(Long id, String nome, String descricao, HistoriaSocial historiaSocial){
     public DadosDetalhamentoHabSoc (HabilidadeSocial habilidadeSocial){
-        this(habilidadeSocial.getId(), habilidadeSocial.getNome(), habilidadeSocial.getDescricao(), habilidadeSocial.getHistoriasSociais());
+        this(habilidadeSocial.getId(), habilidadeSocial.getNome(), habilidadeSocial.getDescricao(), habilidadeSocial.getHistoriaSocial());
     }
 }

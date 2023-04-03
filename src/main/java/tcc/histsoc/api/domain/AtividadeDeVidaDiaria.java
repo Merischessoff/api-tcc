@@ -26,11 +26,11 @@ public class AtividadeDeVidaDiaria{
     public AtividadeDeVidaDiaria(DadosCadAVD dados){
         this.nome = dados.nome();
         this.descricao = dados.descricao();
-        this.historiasSociais = dados.historiasSociais();
+        this.historiaSocial = dados.historiaSocial();
     }
 
-    @ManyToMany
-    private List<HistoriaSocial> historiasSociais;
+    @ManyToOne
+    private HistoriaSocial historiaSocial;
 
     public void atualizarInformacoes(DadosAtualizacaoAVD dados) {
         if (dados.nome() != null) {
@@ -39,8 +39,8 @@ public class AtividadeDeVidaDiaria{
         if (dados.descricao() != null) {
             this.descricao = dados.descricao();
         }
-        if(dados.historiasSociais() != null){
-            this.historiasSociais = dados.historiasSociais();
+        if(dados.historiaSocial() != null){
+            this.historiaSocial = dados.historiaSocial();
         }
     }
 

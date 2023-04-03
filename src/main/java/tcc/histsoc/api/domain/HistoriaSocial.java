@@ -24,10 +24,10 @@ public class HistoriaSocial {
     private String titulo;
     private String texto;
 
-    @ManyToMany
+    @OneToMany
     private List<HabilidadeSocial> habilidadesSociais;
 
-    @ManyToMany
+    @OneToMany
     private List<AtividadeDeVidaDiaria> atividadeDeVidaDiarias;
 
     @OneToMany

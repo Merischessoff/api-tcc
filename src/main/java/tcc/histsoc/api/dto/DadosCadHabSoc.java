@@ -7,4 +7,4 @@ import tcc.histsoc.api.domain.HistoriaSocial;
 
 public record DadosCadHabSoc (
     @NotBlank String nome,
-    @NotBlank String descricao, List<HistoriaSocial> historiasSociais){}
+    @NotBlank String descricao, HistoriaSocial historiaSocial){}

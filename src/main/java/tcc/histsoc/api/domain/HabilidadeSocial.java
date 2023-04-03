@@ -23,13 +23,13 @@ public class HabilidadeSocial {
     private String nome;
     private String descricao;
 
-    @ManyToMany
-    private List<HistoriaSocial> historiasSociais;
+    @ManyToOne
+    private HistoriaSocial historiaSocial;
 
     public HabilidadeSocial(DadosCadHabSoc dados){
         this.nome = dados.nome();
         this.descricao = dados.descricao();
-        this.historiasSociais = dados.historiasSociais();
+        this.historiaSocial = dados.historiaSocial();
     }
 
     public void atualizarInformacoes(DadosAtualizacaoHabSoc dados){
@@ -39,8 +39,8 @@ public class HabilidadeSocial {
         if(dados.descricao() != null){
             this.descricao = dados.descricao();
         }
-        if(dados.historiasSociais()!=null){
-            this.historiasSociais = dados.historiasSociais();
+        if(dados.historiaSocial()!=null){
+            this.historiaSocial = dados.historiaSocial();
         }
     }
 
