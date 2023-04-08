@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import tcc.histsoc.api.dto.DadosAtualizacaoAVD;
-import tcc.histsoc.api.dto.DadosCadAVD;
 import java.util.List;
 
 
@@ -23,26 +21,8 @@ public class AtividadeDeVidaDiaria{
     private String nome;
     private String descricao;
 
-    public AtividadeDeVidaDiaria(DadosCadAVD dados){
-        this.nome = dados.nome();
-        this.descricao = dados.descricao();
-        this.historiaSocial = dados.historiaSocial();
-    }
-
-    @ManyToOne
-    private HistoriaSocial historiaSocial;
-
-    public void atualizarInformacoes(DadosAtualizacaoAVD dados) {
-        if (dados.nome() != null) {
-            this.nome = dados.nome();
-        }
-        if (dados.descricao() != null) {
-            this.descricao = dados.descricao();
-        }
-        if(dados.historiaSocial() != null){
-            this.historiaSocial = dados.historiaSocial();
-        }
-    }
+    @OneToMany
+    private List<HistoriaSocial> historiaSocial;
 
     
 }

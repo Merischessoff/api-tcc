@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import tcc.histsoc.api.dto.DadosAtualizacaoHistSoc;
 import tcc.histsoc.api.dto.DadosCadHisSoc;
 
 @Table(name = "historiasocial")
@@ -24,39 +23,24 @@ public class HistoriaSocial {
     private String titulo;
     private String texto;
 
-    @OneToMany
-    private List<HabilidadeSocial> habilidadesSociais;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private HabilidadeSocial habilidadeSocial;
 
-    @OneToMany
-    private List<AtividadeDeVidaDiaria> atividadeDeVidaDiarias;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private AtividadeDeVidaDiaria atividadeDeVidaDiaria;
 
-    @OneToMany
-    private List<Imagem> imagens;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Imagem> imagem;
 
-    public HistoriaSocial(DadosCadHisSoc dados){
-        this.titulo = dados.titulo();
-        this.texto = dados.texto();
-        this.atividadeDeVidaDiarias = dados.atividadeDeVidaDiarias();
-        this.habilidadesSociais = dados.habilidadesSociais();
-        this.imagens = dados.imagens();
-
+    public HistoriaSocial(DadosCadHisSoc dado){
+        this.habilidadeSocial = dado.habilidadeSocial();
+        this.atividadeDeVidaDiaria = dado.atividadeDeVidaDiaria();
+        this.imagem = dado.imagem();
+        this.titulo = dado.titulo();
+        this.texto = dado.texto();
     }
 
-    public void atualizarInformacoes(DadosAtualizacaoHistSoc dados) {
-        if(dados.texto()!=null){
-            this.texto = dados.texto();
-        }
-        if(dados.titulo()!=null){
-            this.titulo = dados.titulo();
-        }
-        if(dados.atividadeDeVidaDiarias()!=null){
-            this.atividadeDeVidaDiarias = dados.atividadeDeVidaDiarias();
-        }
-        if(dados.habilidadeSocials()!=null){
-            this.habilidadesSociais = dados.habilidadeSocials();
-        }
-        if(dados.imagens() != null){
-            this.imagens = dados.imagens();
-        }
-    }
+
+
+  
 }

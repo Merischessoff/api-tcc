@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import tcc.histsoc.api.dto.DadosAtualizacaoHabSoc;
-import tcc.histsoc.api.dto.DadosCadHabSoc;
 
 @Table(name = "habilidadesocial")
 @Entity(name = "HabilidadeSocial")
@@ -23,25 +21,8 @@ public class HabilidadeSocial {
     private String nome;
     private String descricao;
 
-    @ManyToOne
-    private HistoriaSocial historiaSocial;
+    @OneToMany
+    private List<HistoriaSocial> historiaSocial;
 
-    public HabilidadeSocial(DadosCadHabSoc dados){
-        this.nome = dados.nome();
-        this.descricao = dados.descricao();
-        this.historiaSocial = dados.historiaSocial();
-    }
-
-    public void atualizarInformacoes(DadosAtualizacaoHabSoc dados){
-        if(dados.nome() != null){
-            this.nome = dados.nome();
-        }
-        if(dados.descricao() != null){
-            this.descricao = dados.descricao();
-        }
-        if(dados.historiaSocial()!=null){
-            this.historiaSocial = dados.historiaSocial();
-        }
-    }
 
 }

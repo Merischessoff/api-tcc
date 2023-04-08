@@ -23,7 +23,7 @@ public class Imagem {
 
 
     @ManyToOne
-    HistoriaSocial historiaSocial;
+    private HistoriaSocial historiaSocial;
 
 
 }
