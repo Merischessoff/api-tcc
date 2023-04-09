@@ -27,9 +27,10 @@ public class Usuario implements UserDetails {
     private String cpf;
     private String email;
     private String senha;
-
     private String emailUsuarioVinculado;
-    
+
+    @OneToMany
+    private List<HistoriaSocial> historias = new ArrayList<>();
     
 
     @Enumerated(EnumType.STRING)

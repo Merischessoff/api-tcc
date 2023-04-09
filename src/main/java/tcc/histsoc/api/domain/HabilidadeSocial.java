@@ -21,8 +21,8 @@ public class HabilidadeSocial {
     private String nome;
     private String descricao;
 
-    @OneToMany
-    private List<HistoriaSocial> historiaSocial;
+    //@OneToMany
+    //private List<HistoriaSocial> historiaSocial;
 
 
 }

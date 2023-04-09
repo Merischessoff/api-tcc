@@ -22,8 +22,8 @@ public class Imagem {
     private String texto;
 
 
-    @ManyToOne
-    private HistoriaSocial historiaSocial;
+    //@ManyToOne
+    //private HistoriaSocial historiaSocial;
 
 
 }

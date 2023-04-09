@@ -22,6 +22,11 @@ public class HistoriaSocial {
     private Long id;
     private String titulo;
     private String texto;
+    private String emailUsuarioResponsavel;
+
+    @ManyToOne
+    @JoinColumn(name = "emailUsuarioLeitor")
+    private Usuario usuarioLeitor;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private HabilidadeSocial habilidadeSocial;
@@ -38,6 +43,7 @@ public class HistoriaSocial {
         this.imagem = dado.imagem();
         this.titulo = dado.titulo();
         this.texto = dado.texto();
+        this.emailUsuarioResponsavel = dado.emailUsuarioResponsavel();
     }
 
 
