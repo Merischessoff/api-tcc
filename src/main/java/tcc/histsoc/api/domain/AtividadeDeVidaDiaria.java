@@ -1,11 +1,12 @@
 package tcc.histsoc.api.domain;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import java.util.List;
 
 
 @Table(name = "atividadedevidadiaria")
@@ -21,8 +22,8 @@ public class AtividadeDeVidaDiaria{
     private String nome;
     private String descricao;
 
-    //@OneToMany
-    //private List<HistoriaSocial> historiaSocial;
+    @OneToMany
+    private List<HistoriaSocial> historiasSociais;
 
     
 }

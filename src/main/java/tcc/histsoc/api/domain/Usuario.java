@@ -30,7 +30,7 @@ public class Usuario implements UserDetails {
     private String emailUsuarioVinculado;
 
     @OneToMany
-    private List<HistoriaSocial> historias = new ArrayList<>();
+    private List<HistoriaSocial> historiasSociais = new ArrayList<>();
     
 
     @Enumerated(EnumType.STRING)

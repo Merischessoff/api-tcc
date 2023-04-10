@@ -35,12 +35,12 @@ public class HistoriaSocial {
     private AtividadeDeVidaDiaria atividadeDeVidaDiaria;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Imagem> imagem;
+    private List<Imagem> imagens;
 
     public HistoriaSocial(DadosCadHisSoc dado){
         this.habilidadeSocial = dado.habilidadeSocial();
         this.atividadeDeVidaDiaria = dado.atividadeDeVidaDiaria();
-        this.imagem = dado.imagem();
+        this.imagens = dado.imagens();
         this.titulo = dado.titulo();
         this.texto = dado.texto();
         this.emailUsuarioResponsavel = dado.emailUsuarioResponsavel();
