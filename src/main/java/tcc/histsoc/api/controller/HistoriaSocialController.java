@@ -1,6 +1,7 @@
 package tcc.histsoc.api.controller;
 
 import jakarta.validation.Valid;
+import tcc.histsoc.api.domain.AtividadeDeVidaDiaria;
 import tcc.histsoc.api.domain.HabilidadeSocial;
 import tcc.histsoc.api.domain.HistoriaSocial;
 import tcc.histsoc.api.repository.AtividadeDeVidaDiariaRepository;

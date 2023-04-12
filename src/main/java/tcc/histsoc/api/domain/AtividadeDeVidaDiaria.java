@@ -2,11 +2,15 @@ package tcc.histsoc.api.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import tcc.histsoc.api.dto.DadosCadAVD;
 
 
 @Table(name = "atividadedevidadiaria")
@@ -15,6 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Setter
 public class AtividadeDeVidaDiaria{
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +27,8 @@ public class AtividadeDeVidaDiaria{
     private String nome;
     private String descricao;
 
-    @OneToMany
+    @JsonIgnore
+    @ManyToMany(mappedBy = "atividadesDeVidaDiarias")
     private List<HistoriaSocial> historiasSociais;
 
     

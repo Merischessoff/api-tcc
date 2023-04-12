@@ -2,6 +2,8 @@ package tcc.histsoc.api.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -24,22 +26,22 @@ public class HistoriaSocial {
     private String texto;
     private String emailUsuarioResponsavel;
 
-    @ManyToOne
-    @JoinColumn(name = "emailUsuarioLeitor")
-    private Usuario usuarioLeitor;
+    @JsonIgnore
+    @ManyToMany
+    private List<Usuario> usuariosLeitores;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private HabilidadeSocial habilidadeSocial;
+    @ManyToMany
+    private List<HabilidadeSocial> habilidadesSociais;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private AtividadeDeVidaDiaria atividadeDeVidaDiaria;
+    @ManyToMany
+    private List<AtividadeDeVidaDiaria> atividadesDeVidaDiarias;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Imagem> imagens;
 
     public HistoriaSocial(DadosCadHisSoc dado){
-        this.habilidadeSocial = dado.habilidadeSocial();
-        this.atividadeDeVidaDiaria = dado.atividadeDeVidaDiaria();
+        this.habilidadesSociais = dado.habilidadesSociais();
+        this.atividadesDeVidaDiarias = dado.atividadesDeVidaDiarias();
         this.imagens = dado.imagens();
         this.titulo = dado.titulo();
         this.texto = dado.texto();

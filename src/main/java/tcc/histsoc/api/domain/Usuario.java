@@ -29,7 +29,7 @@ public class Usuario implements UserDetails {
     private String senha;
     private String emailUsuarioVinculado;
 
-    @OneToMany
+    @ManyToMany
     private List<HistoriaSocial> historiasSociais = new ArrayList<>();
     
 

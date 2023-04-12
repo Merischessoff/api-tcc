@@ -1,5 +1,7 @@
 package tcc.histsoc.api.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -21,7 +23,7 @@ public class Imagem {
     private String url;
     private String texto;
 
-
+    @JsonIgnore
     @ManyToOne
     private HistoriaSocial historiaSocial;
 
