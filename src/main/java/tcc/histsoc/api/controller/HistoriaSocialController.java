@@ -27,15 +27,6 @@ public class HistoriaSocialController {
     @Autowired
     private HistoriaSocialRepository repositoryHistSoc;
 
-    @Autowired
-    private ImagemRepository repositoryImg;
-
-    @Autowired
-    private HabilidadeSocialRepository repositoryHs;
-
-    @Autowired
-    private AtividadeDeVidaDiariaRepository repositoryAvd;
-
     @PostMapping
     @Transactional
     public ResponseEntity<HistoriaSocial> cadastrar(@RequestBody @Valid DadosCadHisSoc dados, UriComponentsBuilder uriBuilder) {
