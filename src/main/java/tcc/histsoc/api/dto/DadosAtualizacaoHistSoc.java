@@ -6,9 +6,10 @@ import tcc.histsoc.api.domain.AtividadeDeVidaDiaria;
 import tcc.histsoc.api.domain.HabilidadeSocial;
 import tcc.histsoc.api.domain.HistoriaSocial;
 import tcc.histsoc.api.domain.Imagem;
+import tcc.histsoc.api.domain.Usuario;
 
-public record DadosAtualizacaoHistSoc (Long id, String texto, String titulo, List<HabilidadeSocial> habilidadesSociais, List<AtividadeDeVidaDiaria> atividadesDeVidaDiarias, List<Imagem> imagem){
+public record DadosAtualizacaoHistSoc (String titulo, String texto, String emailUsuarioResponsavel, List<HabilidadeSocial> habilidadesSociais, List<AtividadeDeVidaDiaria> atividadesDeVidaDiarias, List<Imagem> imagens, List<Usuario> usuariosLeitores){
     public DadosAtualizacaoHistSoc(HistoriaSocial historiaSocial){
-        this(historiaSocial.getId(), historiaSocial.getTexto(), historiaSocial.getTitulo(), historiaSocial.getHabilidadesSociais(), historiaSocial.getAtividadesDeVidaDiarias(), historiaSocial.getImagens());
+        this(historiaSocial.getTexto(), historiaSocial.getEmailUsuarioResponsavel(), historiaSocial.getTitulo(), historiaSocial.getHabilidadesSociais(), historiaSocial.getAtividadesDeVidaDiarias(), historiaSocial.getImagens(), historiaSocial.getUsuariosLeitores());
     }
 }

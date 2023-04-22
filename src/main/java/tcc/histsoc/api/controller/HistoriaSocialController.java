@@ -56,9 +56,19 @@ public class HistoriaSocialController {
     @GetMapping("/pesquisa/historiapropria/{id}")
     public ResponseEntity<DadosDetalhamentoHistoriaSocial> listarHistoriasPropriasPorId(@PathVariable Long id) {
         Optional<HistoriaSocial> historia = repositoryHistSoc.findById(id);
-        //Optional<HabilidadeSocial>habilidadeSoc = repository
         DadosDetalhamentoHistoriaSocial historiaDTO = new DadosDetalhamentoHistoriaSocial(historia.get());
         return ResponseEntity.ok(historiaDTO);
+    }
+
+    @PutMapping("/edita/historiapropria/{id}")
+    @Transactional
+    public ResponseEntity<DadosDetalhamentoHistoriaSocial> atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoHistSoc dados) {
+        Optional<HistoriaSocial> historia = repositoryHistSoc.findById(id);
+        HistoriaSocial historiaSocialAtualizada = historia.get();
+        historiaSocialAtualizada.atualizaHistoriaSocial(dados);
+        System.out.println(historiaSocialAtualizada.toString());
+        repositoryHistSoc.save(historiaSocialAtualizada);
+        return ResponseEntity.ok(new DadosDetalhamentoHistoriaSocial(historiaSocialAtualizada));
     }
 
 }

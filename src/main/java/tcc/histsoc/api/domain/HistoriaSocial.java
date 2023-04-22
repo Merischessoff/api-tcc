@@ -2,6 +2,8 @@ package tcc.histsoc.api.domain;
 
 import java.util.List;
 
+import org.aspectj.internal.lang.annotation.ajcDeclareAnnotation;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
@@ -9,11 +11,15 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import tcc.histsoc.api.dto.DadosAtualizacaoHistSoc;
 import tcc.histsoc.api.dto.DadosCadHisSoc;
 
 @Table(name = "historiasocial")
 @Entity(name = "HistoriaSocial")
 @Getter
+@Setter
+
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -48,7 +54,12 @@ public class HistoriaSocial {
         this.emailUsuarioResponsavel = dado.emailUsuarioResponsavel();
     }
 
-
-
+    public void atualizaHistoriaSocial(DadosAtualizacaoHistSoc dado){
+        this.habilidadesSociais = dado.habilidadesSociais();
+        this.atividadesDeVidaDiarias = dado.atividadesDeVidaDiarias();
+        this.imagens = dado.imagens();
+        this.titulo = dado.titulo();
+        this.texto = dado.texto();
+    }
   
 }
