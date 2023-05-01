@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import tcc.histsoc.api.domain.BancoDeHistoriaSocial;
 
-public interface BancoDeHistoriaRepository extends JpaRepository<BancoDeHistoriaSocial, Long>{
+public interface BancoDeHistoriaSocialRepository extends JpaRepository<BancoDeHistoriaSocial, Long>{
     
 }

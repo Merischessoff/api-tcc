@@ -27,5 +27,9 @@ public class Imagem {
     @ManyToOne
     private HistoriaSocial historiaSocial;
 
+    @JsonIgnore
+    @ManyToOne
+    private BancoDeHistoriaSocial bancohistoriaSocial;
+
 
 }

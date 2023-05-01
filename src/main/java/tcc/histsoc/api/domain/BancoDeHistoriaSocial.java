@@ -2,6 +2,8 @@ package tcc.histsoc.api.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +34,10 @@ public class BancoDeHistoriaSocial {
     private String titulo;
     private String texto;
 
+    @JsonIgnore
+    @ManyToMany
+    private List<Usuario> usuariosLeitores;
+    
     @ManyToMany
     private List<HabilidadeSocial> habilidadesSociais;
 

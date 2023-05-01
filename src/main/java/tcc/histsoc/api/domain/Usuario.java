@@ -32,6 +32,8 @@ public class Usuario implements UserDetails {
     @ManyToMany
     private List<HistoriaSocial> historiasSociais = new ArrayList<>();
     
+    @ManyToMany
+    private List<BancoDeHistoriaSocial> historiasSociaisBanco = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipo;
