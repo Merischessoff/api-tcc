@@ -30,6 +30,10 @@ public class HabilidadeSocial {
     @ManyToMany(mappedBy = "habilidadesSociais")
     private List<HistoriaSocial> historiasSociais;
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "habilidadesSociais")
+    private List<BancoDeHistoriaSocial> historiasSociaisBanco;
+
     public HabilidadeSocial(DadosCadHabSoc dado){
         this.nome = dado.nome();
         this.descricao = dado.descricao();

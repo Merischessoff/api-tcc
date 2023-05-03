@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.transaction.Transactional;
+
 @RestController
 @RequestMapping("bancodehistoriasocial")
 public class BancoDeHistoriaSocialController {
@@ -25,6 +27,26 @@ public class BancoDeHistoriaSocialController {
         List<DadosListagemBancoDeHistoriaSocial> lista = historias.stream()
         .map(historia -> new DadosListagemBancoDeHistoriaSocial(historia)).collect(Collectors.toList());
         return ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("/pesquisa/{emailleitor}")
+    public ResponseEntity<List<DadosListagemBancoDeHistoriaSocial>> listarHistoriasPropriasPorEmailUsuarioAssociado(@PathVariable String emailleitor) {
+        List<BancoDeHistoriaSocial> historias = repositoryHistSoc.findByAllEmailBancoDeHistoriaUsuarioAssociado(emailleitor);
+        List<DadosListagemBancoDeHistoriaSocial> lista = historias.stream()
+                                               .map(historia -> new DadosListagemBancoDeHistoriaSocial(historia))
+                                               .collect(Collectors.toList());
+        return ResponseEntity.ok(lista);
+    }
+
+    @PostMapping("/{idbancodehistoria}/{idusuario}")
+    @Transactional
+    public ResponseEntity<String> vincularBancoDeHistoriaSocial(@PathVariable Long idbancodehistoria, @PathVariable Long idusuario) {
+        if (idbancodehistoria == null || idusuario == null) {
+            return ResponseEntity.badRequest().body("Os parâmetros idbancodehistoria e idusuario são obrigatórios.");
+        }
+    
+        repositoryHistSoc.linkUsuarioBancoDeHistorias(idusuario, idbancodehistoria);
+        return ResponseEntity.ok("A vinculação foi realizada com sucesso.");
     }
 
 }

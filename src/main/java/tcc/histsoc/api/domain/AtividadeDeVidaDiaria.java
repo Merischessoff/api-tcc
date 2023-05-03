@@ -31,5 +31,9 @@ public class AtividadeDeVidaDiaria{
     @ManyToMany(mappedBy = "atividadesDeVidaDiarias")
     private List<HistoriaSocial> historiasSociais;
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "atividadesDeVidaDiarias")
+    private List<BancoDeHistoriaSocial> historiasSociaisBanco;
+
     
 }

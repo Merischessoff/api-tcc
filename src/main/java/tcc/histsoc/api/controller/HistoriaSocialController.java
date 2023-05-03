@@ -71,4 +71,13 @@ public class HistoriaSocialController {
         return ResponseEntity.ok(new DadosDetalhamentoHistoriaSocial(historiaSocialAtualizada));
     }
 
+    /*@GetMapping("/pesquisa/historiasproprias/{emailresponsavel}/{emailleitor}")
+    public ResponseEntity<List<DadosListagemHistoriaSocial>> listarHistoriasPropriasPorEmailUsuarioAssociado(@PathVariable String emailresponsavel, @PathVariable String emailleitor) {
+        List<HistoriaSocial> historias = repositoryHistSoc.findByAllEmailHistoriasPropriasUsuarioAssociado(emailresponsavel, emailleitor);
+        List<DadosListagemHistoriaSocial> lista = historias.stream()
+                                               .map(historia -> new DadosListagemHistoriaSocial(historia))
+                                               .collect(Collectors.toList());
+        return ResponseEntity.ok(lista);
+    }*/
+
 }
