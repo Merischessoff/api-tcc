@@ -1,13 +1,8 @@
 package tcc.histsoc.api.controller;
 
 import jakarta.validation.Valid;
-import tcc.histsoc.api.domain.AtividadeDeVidaDiaria;
-import tcc.histsoc.api.domain.HabilidadeSocial;
 import tcc.histsoc.api.domain.HistoriaSocial;
-import tcc.histsoc.api.repository.AtividadeDeVidaDiariaRepository;
-import tcc.histsoc.api.repository.HabilidadeSocialRepository;
 import tcc.histsoc.api.repository.HistoriaSocialRepository;
-import tcc.histsoc.api.repository.ImagemRepository;
 import tcc.histsoc.api.dto.*;
 
 import java.util.List;
@@ -71,13 +66,44 @@ public class HistoriaSocialController {
         return ResponseEntity.ok(new DadosDetalhamentoHistoriaSocial(historiaSocialAtualizada));
     }
 
-    /*@GetMapping("/pesquisa/historiasproprias/{emailresponsavel}/{emailleitor}")
-    public ResponseEntity<List<DadosListagemHistoriaSocial>> listarHistoriasPropriasPorEmailUsuarioAssociado(@PathVariable String emailresponsavel, @PathVariable String emailleitor) {
-        List<HistoriaSocial> historias = repositoryHistSoc.findByAllEmailHistoriasPropriasUsuarioAssociado(emailresponsavel, emailleitor);
+    @GetMapping("/pesquisa/associado/{emailleitor}")
+    public ResponseEntity<List<DadosListagemHistoriaSocial>> listarHistoriasBancoPorEmailUsuarioAssociado(@PathVariable String emailleitor) {
+        List<HistoriaSocial> historias = repositoryHistSoc.findByAllEmailHistoriaUsuarioAssociado(emailleitor);
         List<DadosListagemHistoriaSocial> lista = historias.stream()
                                                .map(historia -> new DadosListagemHistoriaSocial(historia))
                                                .collect(Collectors.toList());
         return ResponseEntity.ok(lista);
-    }*/
+    }
+
+    @GetMapping("/pesquisa/desassociado/{emailleitor}")
+    public ResponseEntity<List<DadosListagemHistoriaSocial>> listarHistoriasBancoPorEmailUsuarioDesassociado(@PathVariable String emailleitor) {
+        List<HistoriaSocial> historias = repositoryHistSoc.findByAllEmailHistoriaUsuarioDesassociado(emailleitor);
+        List<DadosListagemHistoriaSocial> lista = historias.stream()
+                                               .map(historia -> new DadosListagemHistoriaSocial(historia))
+                                               .collect(Collectors.toList());
+        return ResponseEntity.ok(lista);
+    }
+
+    @PostMapping("/associa/{idhistoria}/{idusuario}")
+    @Transactional
+    public ResponseEntity<String> vincularHistoriaSocial(@PathVariable Long idhistoria, @PathVariable Long idusuario) {
+        if (idhistoria == null || idusuario == null) {
+            return ResponseEntity.badRequest().body("Os parâmetros idhistoria e idusuario são obrigatórios.");
+        }
+    
+        repositoryHistSoc.associarUsuarioHistorias(idusuario, idhistoria);
+        return ResponseEntity.ok("A vinculação foi realizada com sucesso.");
+    }
+
+    @PostMapping("/desassocia/{idhistoria}/{idusuario}")
+    @Transactional
+    public ResponseEntity<String> desvincularHistoriaSocial(@PathVariable Long idhistoria, @PathVariable Long idusuario) {
+        if (idhistoria == null || idusuario == null) {
+            return ResponseEntity.badRequest().body("Os parâmetros idhistoria e idusuario são obrigatórios.");
+        }
+    
+        repositoryHistSoc.desassociarUsuarioHistorias(idusuario, idhistoria);
+        return ResponseEntity.ok("A desvinculação foi realizada com sucesso.");
+    }
 
 }

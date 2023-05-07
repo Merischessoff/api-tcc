@@ -30,7 +30,7 @@ public class BancoDeHistoriaSocialController {
     }
 
     @GetMapping("/pesquisa/associado/{emailleitor}")
-    public ResponseEntity<List<DadosListagemBancoDeHistoriaSocial>> listarHistoriasPropriasPorEmailUsuarioAssociado(@PathVariable String emailleitor) {
+    public ResponseEntity<List<DadosListagemBancoDeHistoriaSocial>> listarHistoriasBancoPorEmailUsuarioAssociado(@PathVariable String emailleitor) {
         List<BancoDeHistoriaSocial> historias = repositoryHistSoc.findByAllEmailBancoDeHistoriaUsuarioAssociado(emailleitor);
         List<DadosListagemBancoDeHistoriaSocial> lista = historias.stream()
                                                .map(historia -> new DadosListagemBancoDeHistoriaSocial(historia))
@@ -39,15 +39,15 @@ public class BancoDeHistoriaSocialController {
     }
 
     @GetMapping("/pesquisa/desassociado/{emailleitor}")
-    public ResponseEntity<List<DadosListagemBancoDeHistoriaSocial>> listarHistoriasPropriasPorEmailUsuarioDesassociado(@PathVariable String emailleitor) {
-        List<BancoDeHistoriaSocial> historias = repositoryHistSoc.findByAllEmailBancoDeHistoriaUsuarioAssociado(emailleitor);
+    public ResponseEntity<List<DadosListagemBancoDeHistoriaSocial>> listarHistoriasBancoPorEmailUsuarioDesassociado(@PathVariable String emailleitor) {
+        List<BancoDeHistoriaSocial> historias = repositoryHistSoc.findByAllEmailBancoDeHistoriaUsuarioDesassociado(emailleitor);
         List<DadosListagemBancoDeHistoriaSocial> lista = historias.stream()
                                                .map(historia -> new DadosListagemBancoDeHistoriaSocial(historia))
                                                .collect(Collectors.toList());
         return ResponseEntity.ok(lista);
     }
 
-    @PostMapping("/associar/{idbancodehistoria}/{idusuario}")
+    @PostMapping("/associa/{idbancodehistoria}/{idusuario}")
     @Transactional
     public ResponseEntity<String> vincularBancoDeHistoriaSocial(@PathVariable Long idbancodehistoria, @PathVariable Long idusuario) {
         if (idbancodehistoria == null || idusuario == null) {
@@ -56,6 +56,17 @@ public class BancoDeHistoriaSocialController {
     
         repositoryHistSoc.associarUsuarioBancoDeHistorias(idusuario, idbancodehistoria);
         return ResponseEntity.ok("A vinculação foi realizada com sucesso.");
+    }
+
+    @PostMapping("/desassocia/{idbancodehistoria}/{idusuario}")
+    @Transactional
+    public ResponseEntity<String> desvincularBancoDeHistoriaSocial(@PathVariable Long idbancodehistoria, @PathVariable Long idusuario) {
+        if (idbancodehistoria == null || idusuario == null) {
+            return ResponseEntity.badRequest().body("Os parâmetros idbancodehistoria e idusuario são obrigatórios.");
+        }
+    
+        repositoryHistSoc.desassociarUsuarioBancoDeHistorias(idusuario, idbancodehistoria);
+        return ResponseEntity.ok("A desvinculação foi realizada com sucesso.");
     }
 
 }

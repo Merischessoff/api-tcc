@@ -21,6 +21,6 @@ public interface BancoDeHistoriaSocialRepository extends JpaRepository<BancoDeHi
     void associarUsuarioBancoDeHistorias(Long idUsuario, Long idBancoDeHistoria);
 
     @Modifying
-    @Query(value = "DELETE bancodehistoria_usuarios_leitores WHERE usuarios_leitores_id = ?1 AND banco_de_historia_id = ?2", nativeQuery = true)
+    @Query(value = "DELETE FROM bancodehistoria_usuarios_leitores WHERE usuarios_leitores_id = ?1 AND banco_de_historia_id = ?2", nativeQuery = true)
     void desassociarUsuarioBancoDeHistorias(Long idUsuario, Long idBancoDeHistoria);
 }
