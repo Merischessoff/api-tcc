@@ -66,18 +66,27 @@ public class HistoriaSocialController {
         return ResponseEntity.ok(new DadosDetalhamentoHistoriaSocial(historiaSocialAtualizada));
     }
 
-    @GetMapping("/pesquisa/associado/{emailleitor}")
+    @GetMapping("/pesquisa/associa/{emailleitor}")
     public ResponseEntity<List<DadosListagemHistoriaSocial>> listarHistoriasBancoPorEmailUsuarioAssociado(@PathVariable String emailleitor) {
-        List<HistoriaSocial> historias = repositoryHistSoc.findByAllEmailHistoriaUsuarioAssociado(emailleitor);
+        List<HistoriaSocial> historias = repositoryHistSoc.findByAllEmailHistoriaUsuarioNotIn(emailleitor);
         List<DadosListagemHistoriaSocial> lista = historias.stream()
                                                .map(historia -> new DadosListagemHistoriaSocial(historia))
                                                .collect(Collectors.toList());
         return ResponseEntity.ok(lista);
     }
 
-    @GetMapping("/pesquisa/desassociado/{emailleitor}")
+    @GetMapping("/pesquisa/leitor/lista/{emailleitor}")
+    public ResponseEntity<List<DadosListagemHistoriaSocial>> listarHistoriasBancoPorEmailUsuario(@PathVariable String emailleitor) {
+        List<HistoriaSocial> historias = repositoryHistSoc.findByAllEmailHistoriaUsuarioIn(emailleitor);
+        List<DadosListagemHistoriaSocial> lista = historias.stream()
+                                               .map(historia -> new DadosListagemHistoriaSocial(historia))
+                                               .collect(Collectors.toList());
+        return ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("/pesquisa/desassocia/{emailleitor}")
     public ResponseEntity<List<DadosListagemHistoriaSocial>> listarHistoriasBancoPorEmailUsuarioDesassociado(@PathVariable String emailleitor) {
-        List<HistoriaSocial> historias = repositoryHistSoc.findByAllEmailHistoriaUsuarioDesassociado(emailleitor);
+        List<HistoriaSocial> historias = repositoryHistSoc.findByAllEmailHistoriaUsuarioIn(emailleitor);
         List<DadosListagemHistoriaSocial> lista = historias.stream()
                                                .map(historia -> new DadosListagemHistoriaSocial(historia))
                                                .collect(Collectors.toList());

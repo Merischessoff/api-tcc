@@ -29,18 +29,27 @@ public class BancoDeHistoriaSocialController {
         return ResponseEntity.ok(lista);
     }
 
-    @GetMapping("/pesquisa/associado/{emailleitor}")
+    @GetMapping("/pesquisa/associa/{emailleitor}")
     public ResponseEntity<List<DadosListagemBancoDeHistoriaSocial>> listarHistoriasBancoPorEmailUsuarioAssociado(@PathVariable String emailleitor) {
-        List<BancoDeHistoriaSocial> historias = repositoryHistSoc.findByAllEmailBancoDeHistoriaUsuarioAssociado(emailleitor);
+        List<BancoDeHistoriaSocial> historias = repositoryHistSoc.findByAllEmailBancoDeHistoriaUsuarioNotIn(emailleitor);
         List<DadosListagemBancoDeHistoriaSocial> lista = historias.stream()
                                                .map(historia -> new DadosListagemBancoDeHistoriaSocial(historia))
                                                .collect(Collectors.toList());
         return ResponseEntity.ok(lista);
     }
 
-    @GetMapping("/pesquisa/desassociado/{emailleitor}")
+    @GetMapping("/pesquisa/leitor/lista/{emailleitor}")
+    public ResponseEntity<List<DadosListagemBancoDeHistoriaSocial>> listarHistoriasBancoPorEmailUsuario(@PathVariable String emailleitor) {
+        List<BancoDeHistoriaSocial> historias = repositoryHistSoc.findByAllEmailBancoDeHistoriaUsuarioIn(emailleitor);
+        List<DadosListagemBancoDeHistoriaSocial> lista = historias.stream()
+                                               .map(historia -> new DadosListagemBancoDeHistoriaSocial(historia))
+                                               .collect(Collectors.toList());
+        return ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("/pesquisa/desassocia/{emailleitor}")
     public ResponseEntity<List<DadosListagemBancoDeHistoriaSocial>> listarHistoriasBancoPorEmailUsuarioDesassociado(@PathVariable String emailleitor) {
-        List<BancoDeHistoriaSocial> historias = repositoryHistSoc.findByAllEmailBancoDeHistoriaUsuarioDesassociado(emailleitor);
+        List<BancoDeHistoriaSocial> historias = repositoryHistSoc.findByAllEmailBancoDeHistoriaUsuarioIn(emailleitor);
         List<DadosListagemBancoDeHistoriaSocial> lista = historias.stream()
                                                .map(historia -> new DadosListagemBancoDeHistoriaSocial(historia))
                                                .collect(Collectors.toList());

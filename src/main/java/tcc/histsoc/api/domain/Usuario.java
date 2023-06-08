@@ -24,7 +24,7 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private String cpf;
+    //private String cpf;
     private String email;
     private String senha;
     private String emailUsuarioVinculado;
@@ -41,7 +41,7 @@ public class Usuario implements UserDetails {
     public Usuario(DadosCadUsuario dados){
         this.nome = dados.nome();
         this.email = dados.email();
-        this.cpf = dados.cpf();
+        //this.cpf = dados.cpf();
         this.senha = dados.senha();
         this.tipo = dados.tipo();
         this.emailUsuarioVinculado = dados.emailUsuarioVinculado();

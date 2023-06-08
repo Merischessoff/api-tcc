@@ -17,10 +17,10 @@ public interface HistoriaSocialRepository extends JpaRepository<HistoriaSocial, 
     List<HistoriaSocial> findByAllEmailHistoriasProprias(String email);
 
     @Query(value = "SELECT * FROM historiasocial h WHERE h.id NOT IN (SELECT IFNULL(hul.historia_social_id, 0) FROM usuario u LEFT OUTER JOIN historiasocial_usuarios_leitores hul on u.id = hul.usuarios_leitores_id WHERE u.email = ?1)", nativeQuery = true)
-    List<HistoriaSocial> findByAllEmailHistoriaUsuarioAssociado(String emailLeitor);
+    List<HistoriaSocial> findByAllEmailHistoriaUsuarioNotIn(String emailLeitor);
 
     @Query(value = "SELECT * FROM historiasocial h WHERE h.id IN (SELECT IFNULL(hul.historia_social_id, 0) FROM usuario u LEFT OUTER JOIN historiasocial_usuarios_leitores hul on u.id = hul.usuarios_leitores_id WHERE u.email = ?1)", nativeQuery = true)
-    List<HistoriaSocial> findByAllEmailHistoriaUsuarioDesassociado(String emailLeitor);
+    List<HistoriaSocial> findByAllEmailHistoriaUsuarioIn(String emailLeitor);
 
     @Modifying
     @Query(value = "INSERT INTO historiasocial_usuarios_leitores (usuarios_leitores_id, historia_social_id) VALUES(?1, ?2) ", nativeQuery = true)
