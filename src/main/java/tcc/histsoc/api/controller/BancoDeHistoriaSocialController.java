@@ -2,6 +2,7 @@ package tcc.histsoc.api.controller;
 
 import tcc.histsoc.api.domain.BancoDeHistoriaSocial;
 import tcc.histsoc.api.dto.DadosListagemBancoDeHistoriaSocial;
+import tcc.histsoc.api.dto.DadosMensagem;
 import tcc.histsoc.api.repository.BancoDeHistoriaSocialRepository;
 
 import java.util.List;
@@ -58,24 +59,28 @@ public class BancoDeHistoriaSocialController {
 
     @PostMapping("/associa/{idbancodehistoria}/{idusuario}")
     @Transactional
-    public ResponseEntity<String> vincularBancoDeHistoriaSocial(@PathVariable Long idbancodehistoria, @PathVariable Long idusuario) {
+    public ResponseEntity<DadosMensagem> vincularBancoDeHistoriaSocial(@PathVariable Long idbancodehistoria, @PathVariable Long idusuario) {
+        DadosMensagem mensagem = new DadosMensagem();
         if (idbancodehistoria == null || idusuario == null) {
-            return ResponseEntity.badRequest().body("Os parâmetros idbancodehistoria e idusuario são obrigatórios.");
+            mensagem.setMensagem("Os parâmetros idbancodehistoria e idusuario são obrigatórios.");
+        }else{
+            repositoryHistSoc.associarUsuarioBancoDeHistorias(idusuario, idbancodehistoria);
+            mensagem.setMensagem("A vincula\u00E7\u00E3o foi realizada com sucesso.");
         }
-    
-        repositoryHistSoc.associarUsuarioBancoDeHistorias(idusuario, idbancodehistoria);
-        return ResponseEntity.ok("A vinculação foi realizada com sucesso.");
+        return ResponseEntity.ok(mensagem);
     }
 
     @PostMapping("/desassocia/{idbancodehistoria}/{idusuario}")
     @Transactional
-    public ResponseEntity<String> desvincularBancoDeHistoriaSocial(@PathVariable Long idbancodehistoria, @PathVariable Long idusuario) {
+    public ResponseEntity<DadosMensagem> desvincularBancoDeHistoriaSocial(@PathVariable Long idbancodehistoria, @PathVariable Long idusuario) {
+         DadosMensagem mensagem = new DadosMensagem();
         if (idbancodehistoria == null || idusuario == null) {
-            return ResponseEntity.badRequest().body("Os parâmetros idbancodehistoria e idusuario são obrigatórios.");
-        }
-    
-        repositoryHistSoc.desassociarUsuarioBancoDeHistorias(idusuario, idbancodehistoria);
-        return ResponseEntity.ok("A desvinculação foi realizada com sucesso.");
+            mensagem.setMensagem("Os parâmetros idbancodehistoria e idusuario são obrigatórios.");
+        }else{
+            mensagem.setMensagem("A desvincula\u00E7\u00E3o foi realizada com sucesso.");
+            repositoryHistSoc.desassociarUsuarioBancoDeHistorias(idusuario, idbancodehistoria);
+        }    
+        return ResponseEntity.ok(mensagem);
     }
 
 }

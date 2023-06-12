@@ -25,6 +25,7 @@ public class HistoriaSocialController {
     @PostMapping
     @Transactional
     public ResponseEntity<HistoriaSocial> cadastrar(@RequestBody @Valid DadosCadHisSoc dados, UriComponentsBuilder uriBuilder) {
+        System.out.println(dados.toString());
         var historiaSocial = new HistoriaSocial(dados);
         repositoryHistSoc.save(historiaSocial);
         var uri = uriBuilder.path("/historiasocial/{id}").buildAndExpand(historiaSocial.getId()).toUri();
@@ -59,10 +60,12 @@ public class HistoriaSocialController {
     @Transactional
     public ResponseEntity<DadosDetalhamentoHistoriaSocial> atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoHistSoc dados) {
         Optional<HistoriaSocial> historia = repositoryHistSoc.findById(id);
-        HistoriaSocial historiaSocialAtualizada = historia.get();
-        historiaSocialAtualizada.atualizaHistoriaSocial(dados);
-        System.out.println(historiaSocialAtualizada.toString());
-        repositoryHistSoc.save(historiaSocialAtualizada);
+        HistoriaSocial historiaSocialAtualizada = new HistoriaSocial();
+        if(historia.isPresent()){
+            historiaSocialAtualizada = historia.get();
+            historiaSocialAtualizada.atualizaHistoriaSocial(dados);
+            repositoryHistSoc.save(historiaSocialAtualizada);
+        }
         return ResponseEntity.ok(new DadosDetalhamentoHistoriaSocial(historiaSocialAtualizada));
     }
 
@@ -95,24 +98,28 @@ public class HistoriaSocialController {
 
     @PostMapping("/associa/{idhistoria}/{idusuario}")
     @Transactional
-    public ResponseEntity<String> vincularHistoriaSocial(@PathVariable Long idhistoria, @PathVariable Long idusuario) {
+    public ResponseEntity<DadosMensagem> vincularHistoriaSocial(@PathVariable Long idhistoria, @PathVariable Long idusuario) {
+        DadosMensagem mensagem = new DadosMensagem();
         if (idhistoria == null || idusuario == null) {
-            return ResponseEntity.badRequest().body("Os parâmetros idhistoria e idusuario são obrigatórios.");
+           mensagem.setMensagem("Os parâmetros idhistoria e idusuario são obrigatórios.");
+        }else{
+            repositoryHistSoc.associarUsuarioHistorias(idusuario, idhistoria);
+            mensagem.setMensagem("A desvinculação foi realizada com sucesso.");
         }
-    
-        repositoryHistSoc.associarUsuarioHistorias(idusuario, idhistoria);
-        return ResponseEntity.ok("A vinculação foi realizada com sucesso.");
+        return ResponseEntity.ok(mensagem);
     }
 
     @PostMapping("/desassocia/{idhistoria}/{idusuario}")
     @Transactional
-    public ResponseEntity<String> desvincularHistoriaSocial(@PathVariable Long idhistoria, @PathVariable Long idusuario) {
+    public ResponseEntity<DadosMensagem> desvincularHistoriaSocial(@PathVariable Long idhistoria, @PathVariable Long idusuario) {
+        DadosMensagem mensagem = new DadosMensagem();
         if (idhistoria == null || idusuario == null) {
-            return ResponseEntity.badRequest().body("Os parâmetros idhistoria e idusuario são obrigatórios.");
+            mensagem.setMensagem("Os parâmetros idhistoria e idusuario são obrigatórios.");
+        }else{
+            repositoryHistSoc.desassociarUsuarioHistorias(idusuario, idhistoria);
+            mensagem.setMensagem("A desvinculação foi realizada com sucesso.");
         }
-    
-        repositoryHistSoc.desassociarUsuarioHistorias(idusuario, idhistoria);
-        return ResponseEntity.ok("A desvinculação foi realizada com sucesso.");
+        return ResponseEntity.ok(mensagem);
     }
 
 }
