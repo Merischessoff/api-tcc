@@ -1,5 +1,5 @@
 # Definir a versão do Java que será usada na imagem
-FROM adoptopenjdk:17-jdk-hotspot
+FROM openjdk:17
 
 # Configuração do diretório de trabalho
 WORKDIR /app
