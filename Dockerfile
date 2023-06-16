@@ -1,14 +1,5 @@
-# Fetching latest version of Java
 FROM openjdk:17
- 
-# Setting up work directory
-WORKDIR /app
-
-# Copy the jar file into our app
-COPY ./target/api-0.0.1-SNAPSHOT.jar /app
-
-# Exposing port 8080
 EXPOSE 8080
-
-# Starting the application
-CMD ["java", "-jar", "api-0.0.1-SNAPSHOT.jar"]
+ARG JAR_FILE=target/demo-app-1.0.0.jar
+ADD ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
