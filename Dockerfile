@@ -1,5 +1,5 @@
 # Define a imagem base para a etapa de construção
-FROM maven:3.6.0-jdk-17 AS build
+FROM maven:3.8.3-openjdk-17 AS build
 
 # Copia os arquivos de código-fonte e o arquivo pom.xml para o diretório de trabalho do contêiner
 WORKDIR /home/app
