@@ -1,15 +1,22 @@
-#
-# Build stage
-#
+# Define a imagem base para a etapa de construção
 FROM maven:3.6.0-jdk-17 AS build
-COPY src /home/app/src
-COPY pom.xml /home/app
-RUN mvn -f /home/app/pom.xml clean package
 
-#
-# Package stage
-#
+# Copia os arquivos de código-fonte e o arquivo pom.xml para o diretório de trabalho do contêiner
+WORKDIR /home/app
+COPY src ./src
+COPY pom.xml .
+
+# Executa o comando Maven para construir o projeto
+RUN mvn clean package
+
+# Define a imagem base para a etapa de empacotamento
 FROM openjdk:17
+
+# Copia o arquivo JAR gerado na etapa de construção para o diretório do contêiner
 COPY --from=build /home/app/target/api-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar
+
+# Expõe a porta 8080
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/usr/local/lib/demo.jar"]
+
+# Define o comando de entrada para executar o JAR
+CMD ["java", "-jar", "/usr/local/lib/demo.jar"]
