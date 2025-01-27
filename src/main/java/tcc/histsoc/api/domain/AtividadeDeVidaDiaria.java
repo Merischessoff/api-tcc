@@ -10,7 +10,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tcc.histsoc.api.dto.DadosCadAVD;
 
 
 @Table(name = "atividadedevidadiaria")

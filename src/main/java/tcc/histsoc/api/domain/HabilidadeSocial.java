@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import tcc.histsoc.api.dto.DadosCadAVD;
 import tcc.histsoc.api.dto.DadosCadHabSoc;
 
 @Table(name = "habilidadesocial")

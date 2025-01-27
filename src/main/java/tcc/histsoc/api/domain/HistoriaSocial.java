@@ -2,8 +2,6 @@ package tcc.histsoc.api.domain;
 
 import java.util.List;
 
-import org.aspectj.internal.lang.annotation.ajcDeclareAnnotation;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;

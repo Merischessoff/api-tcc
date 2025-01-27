@@ -1,30 +1,25 @@
 package tcc.histsoc.api.controller;
 
+import tcc.histsoc.api.Strings;
 import tcc.histsoc.api.domain.BancoDeHistoriaSocial;
 import tcc.histsoc.api.dto.DadosListagemBancoDeHistoriaSocial;
 import tcc.histsoc.api.dto.DadosMensagem;
-import tcc.histsoc.api.repository.BancoDeHistoriaSocialRepository;
-
+import tcc.histsoc.api.service.BancoDeHistoriaSocialService;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("bancodehistoriasocial")
 public class BancoDeHistoriaSocialController {
 
-    @Autowired
-    private BancoDeHistoriaSocialRepository repositoryHistSoc;
-
+    BancoDeHistoriaSocialService bancoDeHistoriaSocialService = new BancoDeHistoriaSocialService();
     
     @GetMapping("/pesquisa")
     public ResponseEntity<List<DadosListagemBancoDeHistoriaSocial>> listarBancoDeHistoriasSociais() {
-        List<BancoDeHistoriaSocial> historias = repositoryHistSoc.findAll();
+        List<BancoDeHistoriaSocial> historias = bancoDeHistoriaSocialService.findAll();
         List<DadosListagemBancoDeHistoriaSocial> lista = historias.stream()
         .map(historia -> new DadosListagemBancoDeHistoriaSocial(historia)).collect(Collectors.toList());
         return ResponseEntity.ok(lista);
@@ -32,7 +27,7 @@ public class BancoDeHistoriaSocialController {
 
     @GetMapping("/pesquisa/associa/{emailleitor}")
     public ResponseEntity<List<DadosListagemBancoDeHistoriaSocial>> listarHistoriasBancoPorEmailUsuarioAssociado(@PathVariable String emailleitor) {
-        List<BancoDeHistoriaSocial> historias = repositoryHistSoc.findByAllEmailBancoDeHistoriaUsuarioNotIn(emailleitor);
+        List<BancoDeHistoriaSocial> historias = bancoDeHistoriaSocialService.findByAllEmailBancoDeHistoriaUsuarioNotIn(emailleitor);
         List<DadosListagemBancoDeHistoriaSocial> lista = historias.stream()
                                                .map(historia -> new DadosListagemBancoDeHistoriaSocial(historia))
                                                .collect(Collectors.toList());
@@ -41,7 +36,7 @@ public class BancoDeHistoriaSocialController {
 
     @GetMapping("/pesquisa/leitor/lista/{emailleitor}")
     public ResponseEntity<List<DadosListagemBancoDeHistoriaSocial>> listarHistoriasBancoPorEmailUsuario(@PathVariable String emailleitor) {
-        List<BancoDeHistoriaSocial> historias = repositoryHistSoc.findByAllEmailBancoDeHistoriaUsuarioIn(emailleitor);
+        List<BancoDeHistoriaSocial> historias = bancoDeHistoriaSocialService.findByAllEmailBancoDeHistoriaUsuarioIn(emailleitor); 
         List<DadosListagemBancoDeHistoriaSocial> lista = historias.stream()
                                                .map(historia -> new DadosListagemBancoDeHistoriaSocial(historia))
                                                .collect(Collectors.toList());
@@ -50,7 +45,7 @@ public class BancoDeHistoriaSocialController {
 
     @GetMapping("/pesquisa/desassocia/{emailleitor}")
     public ResponseEntity<List<DadosListagemBancoDeHistoriaSocial>> listarHistoriasBancoPorEmailUsuarioDesassociado(@PathVariable String emailleitor) {
-        List<BancoDeHistoriaSocial> historias = repositoryHistSoc.findByAllEmailBancoDeHistoriaUsuarioIn(emailleitor);
+        List<BancoDeHistoriaSocial> historias = bancoDeHistoriaSocialService.findByAllEmailBancoDeHistoriaUsuarioIn(emailleitor);
         List<DadosListagemBancoDeHistoriaSocial> lista = historias.stream()
                                                .map(historia -> new DadosListagemBancoDeHistoriaSocial(historia))
                                                .collect(Collectors.toList());
@@ -62,10 +57,10 @@ public class BancoDeHistoriaSocialController {
     public ResponseEntity<DadosMensagem> vincularBancoDeHistoriaSocial(@PathVariable Long idbancodehistoria, @PathVariable Long idusuario) {
         DadosMensagem mensagem = new DadosMensagem();
         if (idbancodehistoria == null || idusuario == null) {
-            mensagem.setMensagem("Os parâmetros idbancodehistoria e idusuario são obrigatórios.");
+            mensagem.setMensagem(Strings.MSG_PARAM_ID_USU_ID_BANC_DE_HIST);
         }else{
-            repositoryHistSoc.associarUsuarioBancoDeHistorias(idusuario, idbancodehistoria);
-            mensagem.setMensagem("A vincula\u00E7\u00E3o foi realizada com sucesso.");
+            bancoDeHistoriaSocialService.associarUsuarioBancoDeHistorias(idusuario, idbancodehistoria);
+            mensagem.setMensagem(Strings.MSG_VINC_REALIZ);
         }
         return ResponseEntity.ok(mensagem);
     }
@@ -73,13 +68,7 @@ public class BancoDeHistoriaSocialController {
     @PostMapping("/desassocia/{idbancodehistoria}/{idusuario}")
     @Transactional
     public ResponseEntity<DadosMensagem> desvincularBancoDeHistoriaSocial(@PathVariable Long idbancodehistoria, @PathVariable Long idusuario) {
-         DadosMensagem mensagem = new DadosMensagem();
-        if (idbancodehistoria == null || idusuario == null) {
-            mensagem.setMensagem("Os parâmetros idbancodehistoria e idusuario são obrigatórios.");
-        }else{
-            mensagem.setMensagem("A desvincula\u00E7\u00E3o foi realizada com sucesso.");
-            repositoryHistSoc.desassociarUsuarioBancoDeHistorias(idusuario, idbancodehistoria);
-        }    
+        DadosMensagem mensagem = bancoDeHistoriaSocialService.desassociarUsuarioBancoDeHistorias(idusuario, idbancodehistoria);
         return ResponseEntity.ok(mensagem);
     }
 
