@@ -55,13 +55,7 @@ public class BancoDeHistoriaSocialController {
     @PostMapping("/associa/{idbancodehistoria}/{idusuario}")
     @Transactional
     public ResponseEntity<DadosMensagem> vincularBancoDeHistoriaSocial(@PathVariable Long idbancodehistoria, @PathVariable Long idusuario) {
-        DadosMensagem mensagem = new DadosMensagem();
-        if (idbancodehistoria == null || idusuario == null) {
-            mensagem.setMensagem(Strings.MSG_PARAM_ID_USU_ID_BANC_DE_HIST);
-        }else{
-            bancoDeHistoriaSocialService.associarUsuarioBancoDeHistorias(idusuario, idbancodehistoria);
-            mensagem.setMensagem(Strings.MSG_VINC_REALIZ);
-        }
+        DadosMensagem mensagem = bancoDeHistoriaSocialService.associarUsuarioBancoDeHistorias(idusuario, idbancodehistoria);
         return ResponseEntity.ok(mensagem);
     }
 
