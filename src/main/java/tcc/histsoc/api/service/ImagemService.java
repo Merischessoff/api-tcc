@@ -17,3 +17,4 @@ public class ImagemService {
         return imagemRepository.findByAllEmailIdImagens(email, id);
     }
 }
+           
